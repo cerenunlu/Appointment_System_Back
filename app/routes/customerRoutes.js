@@ -2,21 +2,22 @@
 // const router=express.Router();
 // var db = require("../index");
 // var _ = require("underscore");
+const checkAuth = require('../middleware/checkAuth');
 module.exports=app=>{
     const customer=require("../controllers/customerController.js");
 
 var router=require("express").Router();
 
 //create new customer
-router.post("/",customer.create);
+router.post("/",checkAuth,customer.create);
 //find all customers
-router.get("/",customer.findAll);
+router.get("/",checkAuth,customer.findAll);
 //find customer by id
- router.get("/:id",customer.findOne);
+ router.get("/:id",checkAuth,customer.findOne);
 // //update a customer
-router.put("/:id",customer.update);
+router.put("/:id",checkAuth,customer.update);
 // //delete customer
-router.delete("/:id",customer.delete);
+router.delete("/:id",checkAuth,customer.delete);
 
 app.use("/api/customer",router);
 
