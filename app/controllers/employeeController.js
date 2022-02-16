@@ -2,18 +2,18 @@ const db = require("../models");
 const Employee = db.employee;
 const Op = db.Sequelize.Op;
 var _ = require("underscore");
-
+var bcrypt = require("bcrypt");
 
 exports.create = (req, res) => {
-    let body = _.pick(req.body,
-        "name",
-        "surname",
-        "email",
-        "password",
-        "department_id",
-        "role_id"
+    let body = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        password: req.body.password,
+        department_id: req.body.department_id,
+        role_id: req.body.role_id
 
-    );
+    }
     db.Employee.create(body).then(function (employee) {
         res.json(employee.toJSON());
     }), function (e) {
@@ -29,8 +29,8 @@ exports.findAll = (req, res) => {
 }
 
 
-exports.findOne=(req,res)=>{
-    let employeeId=req.params.id;
+exports.findOne = (req, res) => {
+    let employeeId = req.params.id;
     db.Employee.findOne({
         where: {
             id: employeeId
@@ -42,11 +42,10 @@ exports.findOne=(req,res)=>{
 
 }
 
-
-exports.update=(req,res)=>{
+exports.update = (req, res) => {
     let employeeId = req.params.id;
-    
-    let body = _.pick(req.body, 
+
+    let body = _.pick(req.body,
         "name",
         "surname",
         "email",
@@ -99,7 +98,7 @@ exports.update=(req,res)=>{
 }
 
 
-exports.delete=(req,res)=>{
+exports.delete = (req, res) => {
     let employeeId = req.params.id;
     db.Employee.destroy({
         where: {
@@ -116,5 +115,5 @@ exports.delete=(req,res)=>{
     }, function () {
         res.status(500).send();
     })
-   
+
 }
