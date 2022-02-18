@@ -3,13 +3,14 @@
 // var db = require("../index");
 // var _ = require("underscore");
 const checkAuth = require('../middleware/checkAuth');
+const checkRole = require('../middleware/checkRole');
 module.exports=app=>{
     const customer=require("../controllers/customerController.js");
 
 var router=require("express").Router();
 
 //create new customer
-router.post("/",checkAuth,customer.create);
+router.post("/",checkAuth,checkRole,customer.create);
 //find all customers
 router.get("/",checkAuth,customer.findAll);
 //find customer by id
