@@ -50,8 +50,10 @@ module.exports =(sequelize, Sequelize)=> {
                 },
                 key:'id'
             }
+        },
+        token :{
+            type : Sequelize.STRING,
         }
-       
       
     });
     return Employees;
