@@ -40,6 +40,8 @@ require("./app/routes/departmentRoutes")(app);
  require("./app/routes/employeeRoutes")(app);
  require("./app/routes/customerRoutes")(app);
 require('./app/routes/authRoutes')(app);
+require('./app/routes/dateRoutes')(app);
+require('./app/routes/timeRoutes')(app);
 // require('./app/routes/user.routes')(app);
 // app.listen(PORT,()=>{
 //      console.log("server is running"+ PORT +"!!");
