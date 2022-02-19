@@ -33,11 +33,6 @@ module.exports =(sequelize,Sequelize)=> {
             allowNull:false,
            
         },
-        appointmentTime:{
-            type:Sequelize.TIME,
-            allowNull:false,
-           
-        },
         employee_id : {
             type: Sequelize.INTEGER,
             references:{
