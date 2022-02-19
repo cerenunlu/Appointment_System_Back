@@ -10,7 +10,7 @@ module.exports=app=>{
 var router=require("express").Router();
 
 //create new customer
-router.post("/",checkAuth,checkRole,customer.create);
+router.post("/",customer.create);
 //find all customers
 router.get("/",checkAuth,customer.findAll);
 //find customer by id
