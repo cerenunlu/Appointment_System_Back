@@ -1,22 +1,53 @@
-const db=require("../models");
-const customer=db.customer;
-const Op=db.Sequelize.Op;
+const db = require("../models");
+const customer = db.customer;
+const Op = db.Sequelize.Op;
 var _ = require("underscore");
+var jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
+var txtprefix = "prefix";
 
+exports.create = (req, res) => {
+    const hashPassword = hashStrSync(req.body.password);
+    const email = req.body.email;
+    let body = {
+        name: req.body.name,
+        surname: req.body.surname,
+        email: email,
+        password: hashPassword,
+        role_id: req.body.role_id
+    }
 
-exports.create=(req,res)=>{
-    let body = _.pick(req.body, 
-        "name",
-        "surname", 
-        "email", 
-        "password",
-        "appointmentDate",
-        "appointmentTime",
-        "employee_id"
-       
-        );
     db.Customer.create(body).then(function (customer) {
-        res.json(customer.toJSON());
+        let customerId = customer.id;
+
+        let body = _.pick(customer,
+            "name",
+            "surname",
+            "email",
+            "password",
+            "role_id",
+            "token");
+        let attributes = {};
+
+        const token = jwt.sign(
+            {
+                id: customerId,
+                email: customer.email,
+                role_id: customer.role_id
+            },
+            'secret_key',
+            {
+                expiresIn: "2h",
+            }
+        );
+        if (body.hasOwnProperty("token")) {
+            attributes.token = token;
+        }
+
+        // save user token
+
+        return res.status(200).send({ message: 'success', token: token });
     }), function (e) {
         res.status(500).send();
     }
@@ -29,8 +60,8 @@ exports.findAll = (req, res) => {
     })
 }
 
-exports.findOne=(req,res)=>{
-    let customerId=req.params.id;
+exports.findOne = (req, res) => {
+    let customerId = req.params.id;
     db.Customer.findOne({
         where: {
             id: customerId
@@ -42,10 +73,10 @@ exports.findOne=(req,res)=>{
 
 }
 
-exports.update=(req,res)=>{
+exports.update = (req, res) => {
     let customerId = req.params.id;
-    
-    let body = _.pick(req.body, 
+
+    let body = _.pick(req.body,
         "name",
         "surname",
         "email",
@@ -99,7 +130,7 @@ exports.update=(req,res)=>{
 
 }
 
-exports.delete=(req,res)=>{
+exports.delete = (req, res) => {
     let customerId = req.params.id;
     db.Customer.destroy({
         where: {
@@ -116,5 +147,14 @@ exports.delete=(req,res)=>{
     }, function () {
         res.status(500).send();
     })
-   
+
+}
+
+
+function hashStrSync(txtOrg) {
+    return bcrypt.hashSync(`${txtprefix}${txtOrg}`, saltRounds);
+
+}
+function compareStrSync(txtOrg, txtHashed) {
+    return bcrypt.compareSync(`${txtprefix}${txtOrg}`, txtHashed);
 }

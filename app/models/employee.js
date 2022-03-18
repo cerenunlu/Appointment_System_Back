@@ -55,6 +55,11 @@ module.exports =(sequelize, Sequelize)=> {
             type : Sequelize.STRING,
         }
       
+    },
+    {
+        timestamps: false,
+        createdAt: false,
+        updatedAt:false
     });
     return Employees;
  

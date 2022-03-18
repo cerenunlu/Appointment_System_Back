@@ -6,9 +6,11 @@ module.exports = (req, res, next) => {
         Format of it: Authorization : Bearer <token>
         */
        
-        const token = req.headers.authorization.split(" ")[1];
+        const token = req.headers.authorization.split(" ")[1]
+        console.log("back-token")
+        console.log(token);
         const decodedToken = jwt.verify(token, 'secret_key');
-        req.userData = decodedToken;
+        req.body.userData = decodedToken;
         console.log(decodedToken);
         next();
     }catch(error) {

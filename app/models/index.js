@@ -20,8 +20,7 @@ db.Role=require("./role")(sequelize, Sequelize);
 db.Department=require("./department")(sequelize, Sequelize);
 db.Employee=require("./employee")(sequelize, Sequelize);
 db.Customer=require("./customer")(sequelize, Sequelize);
-db.Date=require("./date")(sequelize, Sequelize);
-db.Time=require("./time")(sequelize, Sequelize);
-db.EmployeeTime=require("./employe_time")(sequelize, Sequelize);
-db.CustomerEmployee=require("./customer_employee")(sequelize, Sequelize);
+db.Appointment=require("./appointment")(sequelize,Sequelize);
+
+// db.CustomerEmployee=require("./customer_employee")(sequelize, Sequelize);
 module.exports=db;

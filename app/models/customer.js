@@ -28,22 +28,21 @@ module.exports =(sequelize,Sequelize)=> {
                 len: [1.250]
             }
         },
-        appointmentDate:{
-            type:Sequelize.DATEONLY,
-            allowNull:false,
-           
-        },
-        employee_id : {
+        role_id : {
             type: Sequelize.INTEGER,
             references:{
                 model:{
-                    tableName:"employees",
+                    tableName:"roles",
                    
                 },
                 key:'id'
             }
-        }
+        },
        
+    } ,{
+        timestamps: false,
+        createdAt: false,
+        updatedAt:false
     });
 
    

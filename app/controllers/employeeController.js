@@ -42,6 +42,23 @@ exports.findOne = (req, res) => {
 
 }
 
+exports.findByDepartmentId = (req, res) => {
+    
+   console.log("Fİnd by departmentID",req.body.department_id);
+    db.Employee.findAll({
+        where: {
+            department_id: req.body.department_id
+        }
+    }).then(function (employee) {
+
+        res.json({
+            status: "success",
+            data: employee
+        });
+    })
+
+}
+
 exports.update = (req, res) => {
     let employeeId = req.params.id;
 

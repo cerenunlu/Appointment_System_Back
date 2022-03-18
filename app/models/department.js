@@ -7,6 +7,11 @@ module.exports =(sequelize,Sequelize)=> {
                 len: [1.250]
             }
         }
+    },
+    {
+        timestamps: false,
+        createdAt: false,
+        updatedAt:false
     });
 
    

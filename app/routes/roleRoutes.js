@@ -4,7 +4,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   //create new customer
-  router.post("/", checkAuth, role.create);
+  router.post("/",role.create);
   //find all customers
   router.get("/", checkAuth,role.findAll);
   // //find customer by id
@@ -12,7 +12,7 @@ module.exports = app => {
   // //update a customer
   router.put("/:id", checkAuth,role.update);
   // //delete customer
-  router.delete("/:id", checkAuth,role.delete);
+  router.delete("/:id",role.delete);
 
   app.use("/api/role", router);
 

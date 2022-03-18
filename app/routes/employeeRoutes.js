@@ -6,11 +6,13 @@ module.exports=app=>{
 var router=require("express").Router();
 
 //create new customer
-router.post("/",checkAuth,checkRole,employee.create);
+router.post("/",employee.create);
 //find all customers
  router.get("/",checkAuth,checkRole,employee.findAll);
  //find customer by id
 router.get("/:id",checkAuth,checkRole,employee.findOne);
+
+router.post("/employee_by_department",checkAuth,checkRole,employee.findByDepartmentId);
 // //update a customer
 router.put("/:id",checkAuth,checkRole,employee.update);
 // //delete customer
