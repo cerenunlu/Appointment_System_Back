@@ -5,21 +5,23 @@ var _ = require("underscore");
 var bcrypt = require("bcrypt");
 
 exports.create = (req, res) => {
-    let body = {
-        name: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        password: req.body.password,
-        department_id: req.body.department_id,
-        role_id: req.body.role_id
+    const hashPassword = hashStrSync(req.body.password);
+  const email = req.body.email;
+  let body = {
+    name: req.body.name,
+    surname: req.body.surname,
+    email: email,
+    password: hashPassword,
+    department_id: req.body.department_id,
+    role_id: req.body.role_id
 
-    }
-    db.Employee.create(body).then(function (employee) {
-        res.json(employee.toJSON());
-    }), function (e) {
-        res.status(500).send();
-    }
+  }
 
+  db.Employee.create(body).then(function (employee) {
+    res.json(employee);
+  }), function (e) {
+    res.status(500).send();
+  }
 }
 
 exports.findAll = (req, res) => {

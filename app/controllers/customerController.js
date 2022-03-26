@@ -47,7 +47,7 @@ exports.create = (req, res) => {
 
         // save user token
 
-        return res.status(200).send({ message: 'success', token: token });
+        return res.status(200).send({ message: 'success', token: token , role:customer.role_id});
     }), function (e) {
         res.status(500).send();
     }

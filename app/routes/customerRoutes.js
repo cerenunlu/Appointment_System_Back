@@ -14,7 +14,7 @@ router.post("/",customer.create);
 //find all customers
 router.get("/",checkAuth,customer.findAll);
 //find customer by id
- router.get("/:id",checkAuth,customer.findOne);
+ router.get("/:id",customer.findOne);
 // //update a customer
 router.put("/:id",checkAuth,customer.update);
 // //delete customer

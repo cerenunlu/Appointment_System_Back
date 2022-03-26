@@ -43,6 +43,7 @@ const times = [
 ];
 
 exports.create = (req, res) => {
+  console.log("time", req.body.time);
   let body = {
     date: req.body.date,
     time: req.body.time,
@@ -105,23 +106,42 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findByCustomerId = (req, res) => {
+  let customer_id = req.params.id;
+  Appointment.findAll({
+    where: {
+      customer_id: customer_id,
+    },
+  }).then(function (appointment) {
+    res.json(appointment);
+  });
+};
+exports.findByEmployeeId = (req, res) => {
+  let employee_id = req.params.id;
+  Appointment.findAll({
+    where: {
+      employee_id: employee_id,
+    },
+  }).then(function (appointment) {
+    res.json(appointment);
+  });
+};
+
 exports.findExistTimesbyDate = (req, res) => {
   let req_date = req.body.date;
   let req_employee = req.body.employee_id;
   Appointment.findAll({
     where: {
       date: req_date,
-      employee_id: req_employee
+      employee_id: req_employee,
     },
   }).then(function (exist_times) {
     if (Object.keys(exist_times).length === 0) {
-      
       res.json({
         status: "all times available",
         data: times,
       });
     } else {
-     
       res.json({
         status: "available times",
         data: exist_times,

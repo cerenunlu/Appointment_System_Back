@@ -14,9 +14,8 @@ module.exports = (req, res, next) => {
         console.log(typeof(Object.values(decodedToken)));
        console.log(JSON.stringify(Object.values(decodedToken)));
        const test=((Object.values(decodedToken)))[2];
-       console.log(test);
-       console.log("fail test")
-       if(test==1){
+      
+       if(test!=null){
            next();
        }else{
         return res.status(401).send({
